@@ -46,7 +46,7 @@ public class JwtFiltroSolicitudes extends OncePerRequestFilter {
     private String getToken(HttpServletRequest request){    //extraigo el token de la request y le borro la parte de berear
         String header = request.getHeader("Authorization");
         if(header != null && header.startsWith("Bearer"))
-            return header.replace("Bearer", "");
+            return header.replace("Bearer ", "");
         return null;
     }
     
