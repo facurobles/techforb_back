@@ -2,6 +2,7 @@ package com.techforb_back.servicio;
 
 import com.techforb_back.entidad.Usuario;
 import com.techforb_back.repositorio.RepositorioUsuario;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,12 @@ public class ServicioUsuario {
     public Usuario registrarUsuario(Usuario usuario) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return repositorioUsuario.save(usuario);
+    }
+    
+    public boolean existeUsuario (String email){
+        Optional<Usuario> usuario = repositorioUsuario.findByEmail(email);
+        
+        return usuario.isPresent();
     }
             
     

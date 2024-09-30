@@ -6,6 +6,7 @@ import com.techforb_back.entidad.Usuario;
 import com.techforb_back.jwt.JwtProvider;
 import com.techforb_back.servicio.ServicioUsuario;
 import com.techforb_back.servicio.UserDetailImplementacion;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,8 +55,11 @@ public class ControladorAutenticacion {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registrar(@RequestBody Usuario usuario) {
-        // Lógica de registro
+    public ResponseEntity<?> registrar(@Valid @RequestBody Usuario usuario) {
+        
+        if(servicioUsuario.existeUsuario(usuario.getEmail())){
+            return ResponseEntity.status(400).body("El email " + usuario.getEmail() + " ya está registrado. Intenta con otro.");
+        }
         servicioUsuario.registrarUsuario(usuario);
         return ResponseEntity.ok("Usuario registrado exitosamente");
     }
