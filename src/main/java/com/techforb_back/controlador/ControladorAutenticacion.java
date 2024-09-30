@@ -22,29 +22,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/autenticacion")
 @CrossOrigin(origins = {"http://localhost:4200"})
 public class ControladorAutenticacion {
-    
-    
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtProvider jwtProviderUtil;
-    
+
     @Autowired
     private ServicioUsuario servicioUsuario;
-            
+
     @Autowired
     private UserDetailImplementacion userDetailImplementacion;
-    
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginUsuario loginUsuario) throws Exception {
         try {
             authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword())
+                    new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Credenciales inválidas", e);
+            return ResponseEntity.status(401).body("Credenciales inválidas"); 
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error en el servidor: " + e.getMessage()); 
         }
 
         final UserDetails userDetails = userDetailImplementacion.loadUserByUsername(loginUsuario.getEmail());
@@ -59,5 +59,5 @@ public class ControladorAutenticacion {
         servicioUsuario.registrarUsuario(usuario);
         return ResponseEntity.ok("Usuario registrado exitosamente");
     }
-    
+
 }

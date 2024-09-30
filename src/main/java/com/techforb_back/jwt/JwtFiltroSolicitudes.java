@@ -28,6 +28,14 @@ public class JwtFiltroSolicitudes extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+
+        if (path.equals("/autenticacion/login") || path.equals("/autenticacion/register")) {
+            filterChain.doFilter(request, response); 
+            return;
+        }
+
         try {
             String token = getToken(request);
             if (token != null && jwtProvider.validarToken(token)) {
@@ -42,13 +50,13 @@ public class JwtFiltroSolicitudes extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-    
-    private String getToken(HttpServletRequest request){    //extraigo el token de la request y le borro la parte de berear
+
+    private String getToken(HttpServletRequest request) {    //extraigo el token de la request y le borro la parte de berear
         String header = request.getHeader("Authorization");
-        if(header != null && header.startsWith("Bearer"))
+        if (header != null && header.startsWith("Bearer")) {
             return header.replace("Bearer ", "");
+        }
         return null;
     }
-    
 
 }
