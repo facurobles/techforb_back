@@ -1,6 +1,7 @@
 package com.techforb_back.controlador;
 
 import com.techforb_back.entidad.LoginUsuario;
+import com.techforb_back.entidad.Mensaje;
 import com.techforb_back.entidad.RespuestaAutenticacion;
 import com.techforb_back.entidad.Usuario;
 import com.techforb_back.jwt.JwtProvider;
@@ -43,9 +44,9 @@ public class ControladorAutenticacion {
                     new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword())
             );
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(401).body("Credenciales inválidas"); 
+            return ResponseEntity.status(401).body(new Mensaje("Credenciales inválidas")); 
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error en el servidor: " + e.getMessage()); 
+            return ResponseEntity.status(500).body(new Mensaje("Error en el servidor: " + e.getMessage())); 
         }
 
         final UserDetails userDetails = userDetailImplementacion.loadUserByUsername(loginUsuario.getEmail());
@@ -58,10 +59,10 @@ public class ControladorAutenticacion {
     public ResponseEntity<?> registrar(@Valid @RequestBody Usuario usuario) {
         
         if(servicioUsuario.existeUsuario(usuario.getEmail())){
-            return ResponseEntity.status(400).body("El email " + usuario.getEmail() + " ya está registrado. Intenta con otro.");
+            return ResponseEntity.status(400).body(new Mensaje("El email " + usuario.getEmail() + " ya está registrado. Intenta con otro."));
         }
         servicioUsuario.registrarUsuario(usuario);
-        return ResponseEntity.ok("Usuario registrado exitosamente");
+        return ResponseEntity.status(200).body(new Mensaje("Usuario registrado exitosamente"));
     }
 
 }

@@ -5,10 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 
 
 @Entity
@@ -25,7 +25,7 @@ public class Usuario {
     
     @NotNull
     @NotEmpty(message="El campo contraseña no puede estar vacío")
-    @Size(min = 20, message = "La contraseña debe tener al menos 8 caracteres")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
  
     @NotNull
@@ -38,18 +38,17 @@ public class Usuario {
     @Size(max = 20, message = "El apellido no puede tener más de 20 caracteres")
     private String apellido;
     
-    @Min(value = 1, message = "La edad debe ser mayor a 0")
-    private int edad;
+    private Date nacimiento;
 
     public Usuario() {
     }
 
-    public Usuario(String email, String password, String nombre, String apellido, int edad) {
+    public Usuario(String email, String password, String nombre, String apellido, Date nacimiento) {
         this.email = email;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.edad = edad;
+        this.nacimiento = nacimiento;
     }
 
     public int getId() {
@@ -92,12 +91,12 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public int getEdad() {
-        return edad;
+    public Date getEdad() {
+        return nacimiento;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setEdad(Date nacimiento) {
+        this.nacimiento = nacimiento;
     }
 
     
