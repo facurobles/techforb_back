@@ -91,11 +91,11 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public Date getEdad() {
+    public Date getNacimiento() {
         return nacimiento;
     }
 
-    public void setEdad(Date nacimiento) {
+    public void setNacimiento(Date nacimiento) {
         this.nacimiento = nacimiento;
     }
 

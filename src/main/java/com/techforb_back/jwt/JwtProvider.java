@@ -1,5 +1,6 @@
 package com.techforb_back.jwt;
 
+import com.techforb_back.servicio.UserDetailImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -19,17 +20,22 @@ public class JwtProvider {
 
     private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-     private final SecretKey  secret_key;
-     
-     public JwtProvider() {
+    private final SecretKey secret_key;
+
+    public JwtProvider() {
         // Generar una clave segura para HS256
         this.secret_key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public String generarToken(UserDetails userDetails) {   //cuando la use, pasar como argumento UserDetailImplementacion.loadByUserName(email) por que eso me devuelve un UserDetails
-        String subject = userDetails.getUsername();
+
+        UserDetailImpl userDetailImpl = (UserDetailImpl) userDetails;  //hago el casteo transformado el parametro a mi implementacion de UserDetails para poder acceder a los atributos
+
         return Jwts.builder()
-                .setSubject(subject)
+                .setSubject(userDetailImpl.getUsername())
+                .claim("nombre", userDetailImpl.getNombre())
+                .claim("apellido", userDetailImpl.getApellido())
+                .claim("nacimiento", userDetailImpl.getNacimiento())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, secret_key)

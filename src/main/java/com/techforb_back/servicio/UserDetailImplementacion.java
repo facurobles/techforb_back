@@ -1,9 +1,7 @@
 package com.techforb_back.servicio;
 
 import com.techforb_back.entidad.Usuario;
-import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,11 +24,7 @@ public class UserDetailImplementacion implements UserDetailsService {
         }
 
         //transformo los datos de ese usuario en userDetails y los retorno
-        return new User(
-                usuario.getEmail(),
-                usuario.getPassword(),
-                new ArrayList<>()
-        );
+        return new UserDetailImpl(usuario);
     }
     
 }
