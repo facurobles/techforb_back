@@ -30,6 +30,10 @@ public class ServicioUsuario {
         
         return usuario.isPresent();
     }
+    
+    public void guardarCambiosUsuario(Usuario usuario){
+        repositorioUsuario.save(usuario);
+    }
             
     
 }

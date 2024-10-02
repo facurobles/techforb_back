@@ -36,8 +36,9 @@ public class JwtProvider {
                 .claim("nombre", userDetailImpl.getNombre())
                 .claim("apellido", userDetailImpl.getApellido())
                 .claim("nacimiento", userDetailImpl.getNacimiento())
+                .claim("email", userDetailImpl.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 2))
                 .signWith(SignatureAlgorithm.HS256, secret_key)
                 .compact();
 
