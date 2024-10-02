@@ -19,7 +19,7 @@ public class ConfiguracionSeguridad {
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFiltroSolicitudes jwtFiltroSolicitudes) throws Exception {
-        http.csrf().disable()     //desactivo Cross-site
+        http.cors().and().csrf().disable()     //desactivo Cross-site
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/autenticacion/login", "/autenticacion/register").permitAll() //desprotego estas rutas
                 .anyRequest().authenticated()       //protejo las demas 

@@ -34,6 +34,11 @@ public class ServicioUsuario {
     public void guardarCambiosUsuario(Usuario usuario){
         repositorioUsuario.save(usuario);
     }
+    
+    public void borrarUsuario (String email){
+        Usuario usuario = repositorioUsuario.getByEmail(email);
+        repositorioUsuario.delete(usuario);
+    }
             
     
 }
