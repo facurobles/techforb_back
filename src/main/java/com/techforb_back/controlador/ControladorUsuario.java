@@ -7,6 +7,7 @@ import com.techforb_back.entidad.Usuario;
 import com.techforb_back.jwt.JwtProvider;
 import com.techforb_back.servicio.ServicioUsuario;
 import com.techforb_back.servicio.UserDetailImplementacion;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,34 +27,37 @@ public class ControladorUsuario {
     @Autowired
     ServicioUsuario servicioUsuario;
 
-    @Autowired
-    private UserDetailImplementacion userDetailImplementacion;
-
-    @Autowired
-    private JwtProvider jwtProviderUtil;
-
+    @Transactional
     @PutMapping("/actualizar/{email}")
     public ResponseEntity<?> update(@PathVariable("email") String email, @RequestBody UsuarioDto usuarioDto) {
+                    System.out.println("se inicio el metodo update");
 
         try {
             Usuario usuario = servicioUsuario.buscarPorEmail(email);
+            
+            System.out.println("se encontro el usuario por email: " + usuario);
 
             usuario.setNombre(usuarioDto.getNombreDto());
             usuario.setApellido(usuarioDto.getApellidoDto());
             usuario.setNacimiento(usuarioDto.getNacimientoDto());
             usuario.setEmail(usuarioDto.getEmailDto());
+            
+            System.out.println("se setearon los campos de usuario : " + usuario);
+
 
             servicioUsuario.guardarCambiosUsuario(usuario);
 
-            final UserDetails userDetails = userDetailImplementacion.loadUserByUsername(usuario.getEmail());
-            final String jwt = jwtProviderUtil.generarToken(userDetails);
+            System.out.println("se guardaron los cambios en el usuario" );
+            return ResponseEntity.status(200).body(new Mensaje("Usuario actualizado con éxito"));
 
-            return ResponseEntity.ok(new RespuestaAutenticacion(jwt));
+
         } catch (Exception e) {
+            System.out.println("Fallo el metodo update" );
             return ResponseEntity.status(500).body(new Mensaje("Error al intentar actualizar: " + e.getMessage()));
+                        
+
         }
         
-                
 
     }
 
