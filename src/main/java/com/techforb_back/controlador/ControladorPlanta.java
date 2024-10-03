@@ -6,8 +6,10 @@ import com.techforb_back.entidad.Planta;
 import com.techforb_back.servicio.ServicioPlanta;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -78,6 +80,11 @@ public class ControladorPlanta {
             return ResponseEntity.status(500).body(new Mensaje("Error. Falló la actualización de la planta" + e.getMessage()));
         }
     }
+    
+    @GetMapping("/todas")
+    public ResponseEntity<List<Planta>> traerTodasPlantas(){
+      List<Planta> listado = servicioPlanta.listarPlantas();
+      return new ResponseEntity(listado, HttpStatus.OK); }
 
     @Transactional
     @GetMapping("/obtenerMetricas")

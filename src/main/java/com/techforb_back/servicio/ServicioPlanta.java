@@ -31,6 +31,10 @@ public class ServicioPlanta {
         repositorioPlanta.save(planta);
     }
     
+    public List<Planta> traerTodasPlantas(){
+        return repositorioPlanta.findAll();
+    }
+    
      public Map<String, Integer> obtenerSumas() {
          
         List<Object[]> arraySumas = repositorioPlanta.obtenerMetricas();
