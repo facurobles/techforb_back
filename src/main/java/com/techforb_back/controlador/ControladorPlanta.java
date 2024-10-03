@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,31 @@ public class ControladorPlanta {
             return ResponseEntity.status(200).body(new Mensaje("Planta eliminada con éxito."));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new Mensaje("Error. Falló la eliminación de la planta"+ e.getMessage()));
+        }
+    }
+    
+    @Transactional
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> actualizarPlanta(@PathVariable("id") int id, @RequestBody PlantaDto plantaDto){
+
+        try {
+            Planta planta = servicioPlanta.buscarPorId(id);
+            
+            if(planta == null){
+                return ResponseEntity.status(500).body(new Mensaje("Error. No se encontró la planta"));
+            }
+            
+            planta.setPais(plantaDto.getPaisDto());
+            planta.setNombre(plantaDto.getNombreDto());
+            planta.setAlertasMedias(plantaDto.getAlertasMediasDto());
+            planta.setAlertasRojas(plantaDto.getAlertasRojasDto());
+            planta.setLecturas(plantaDto.getLecturasDto());
+            
+            servicioPlanta.guardarPlanta(planta);
+            
+            return ResponseEntity.status(200).body(new Mensaje("Planta actualizada con éxito."));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new Mensaje("Error. Falló la actualización de la planta"+ e.getMessage()));
         }
     }
     
