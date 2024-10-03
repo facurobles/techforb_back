@@ -42,6 +42,7 @@ public class ServicioPlanta {
         resultado.put("alertasMedias", ((Number) suma[0]).intValue());
         resultado.put("alertasRojas", ((Number) suma[1]).intValue());
         resultado.put("lecturas", ((Number) suma[2]).intValue());
+        resultado.put("sensoresDeshabilitados", ((Number) suma[3]).intValue());
         
         return resultado;
     }

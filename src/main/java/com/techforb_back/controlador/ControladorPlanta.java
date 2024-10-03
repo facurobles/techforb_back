@@ -33,7 +33,7 @@ public class ControladorPlanta {
         System.out.println(plantaDto.getNombreDto());
 
         try {
-            Planta planta = new Planta(plantaDto.getPaisDto(), plantaDto.getNombreDto(), plantaDto.getLecturasDto(), plantaDto.getAlertasMediasDto(), plantaDto.getAlertasRojasDto());
+            Planta planta = new Planta(plantaDto.getPaisDto(), plantaDto.getNombreDto(), plantaDto.getLecturasDto(), plantaDto.getAlertasMediasDto(), plantaDto.getAlertasRojasDto(), plantaDto.getSensoresDeshabilitadosDto());
             servicioPlanta.guardarPlanta(planta);
             return ResponseEntity.status(200).body(new Mensaje("Planta crerada con éxito."));
         } catch (Exception e) {
@@ -69,6 +69,7 @@ public class ControladorPlanta {
             planta.setAlertasMedias(plantaDto.getAlertasMediasDto());
             planta.setAlertasRojas(plantaDto.getAlertasRojasDto());
             planta.setLecturas(plantaDto.getLecturasDto());
+            planta.setSensoresDeshabilitados(plantaDto.getSensoresDeshabilitadosDto());
 
             servicioPlanta.guardarPlanta(planta);
 

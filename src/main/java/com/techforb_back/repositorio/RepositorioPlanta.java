@@ -11,6 +11,6 @@ public interface RepositorioPlanta extends JpaRepository<Planta, Integer> {
     
     public Planta findById(int id);
     
-    @Query(value = "SELECT SUM(alertas_medias) as alertasMedias, SUM(alertas_rojas) as alertasRojas, SUM(lecturas) as lecturas FROM planta", nativeQuery = true)
+    @Query(value = "SELECT SUM(alertas_medias) as alertasMedias, SUM(alertas_rojas) as alertasRojas, SUM(lecturas) as lecturas, SUM(sensores_deshabilitados) as sensoresDeshabilitados FROM planta", nativeQuery = true)
     public List<Object[]> obtenerMetricas();
 }

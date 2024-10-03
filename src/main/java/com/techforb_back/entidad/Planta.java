@@ -4,9 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Planta {
@@ -23,24 +23,28 @@ public class Planta {
     @NotEmpty(message="El campo nombre no puede estar vacío")
     private String nombre;
     
-    @Positive(message = "Las lecturas deben ser un número positivo")
+    @Min(value = 0, message = "Las lecturas deben ser un número positivo")
     private int lecturas;
     
-    @Positive(message = "Las lecturas medias deben ser un número positivo")
+    @Min(value = 0, message = "Las lecturas medias deben ser un número positivo")
     private int alertasMedias;
     
-    @Positive(message = "Las lecturas rojas deben ser un número positivo")
+    @Min(value = 0, message = "Las lecturas rojas deben ser un número positivo")
     private int alertasRojas;
+    
+    @Min(value = 0, message = "Las lecturas de los sensores deshabilitados no pueden ser negativas")
+    private int sensoresDeshabilitados;
 
     public Planta() {
     }
 
-    public Planta(String pais, String nombre, int lecturas, int alertasMedias, int alertasRojas) {
+    public Planta(String pais, String nombre, int lecturas, int alertasMedias, int alertasRojas, int sensoresDeshabilitados) {
         this.pais = pais;
         this.nombre = nombre;
         this.lecturas = lecturas;
         this.alertasMedias = alertasMedias;
         this.alertasRojas = alertasRojas;
+        this.sensoresDeshabilitados = sensoresDeshabilitados;
     }
 
     public int getId() {
@@ -89,6 +93,14 @@ public class Planta {
 
     public void setAlertasRojas(int alertasRojas) {
         this.alertasRojas = alertasRojas;
+    }
+    
+    public int getSensoresDeshabilitados() {
+        return sensoresDeshabilitados;
+    }
+
+    public void setSensoresDeshabilitados(int sensoresDeshabilitados) {
+        this.sensoresDeshabilitados = sensoresDeshabilitados;
     }
     
     
