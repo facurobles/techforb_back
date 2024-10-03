@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,18 +26,27 @@ public class ControladorPlanta {
     
     @Transactional
     @PostMapping("/crear")
-    public ResponseEntity<?> CrearPlanta(@Valid @RequestBody PlantaDto plantaDto){
+    public ResponseEntity<?> crearPlanta(@Valid @RequestBody PlantaDto plantaDto){
         System.out.println(plantaDto.getNombreDto());
-        System.out.println(plantaDto.getPaisDto());
-        System.out.println(plantaDto.getAlertasMediasDto());
-        System.out.println(plantaDto.getAlertasRojasDto());
-        System.out.println(plantaDto.getLecturasDto());
+       
         try {
             Planta planta = new Planta(plantaDto.getPaisDto(), plantaDto.getNombreDto(), plantaDto.getLecturasDto(), plantaDto.getAlertasMediasDto(), plantaDto.getAlertasRojasDto());
-            servicioPlanta.GuardarPlanta(planta);
+            servicioPlanta.guardarPlanta(planta);
             return ResponseEntity.status(200).body(new Mensaje("Planta crerada con éxito."));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new Mensaje("Error. Falló la creación de la planta"+ e.getMessage()));
+        }
+    }
+    
+    @Transactional
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarPlanta(@PathVariable int id){
+
+        try {
+            servicioPlanta.eliminarPlanta(id);
+            return ResponseEntity.status(200).body(new Mensaje("Planta eliminada con éxito."));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new Mensaje("Error. Falló la eliminación de la planta"+ e.getMessage()));
         }
     }
     

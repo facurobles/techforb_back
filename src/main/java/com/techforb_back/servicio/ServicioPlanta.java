@@ -21,11 +21,11 @@ public class ServicioPlanta {
         return repositorioPlanta.findAll();
     }
     
-    public void EliminarPlanta(int id){
+    public void eliminarPlanta(int id){
         repositorioPlanta.deleteById(id);
     }
     
-    public void GuardarPlanta(Planta planta){
+    public void guardarPlanta(Planta planta){
         repositorioPlanta.save(planta);
     }
     
