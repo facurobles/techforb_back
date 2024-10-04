@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.techforb_back.TechforbBackApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 30.72 s -- in com.techforb_back.TechforbBackApplicationTests
