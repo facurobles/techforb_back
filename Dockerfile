@@ -1,4 +1,4 @@
-FROM openjdk:17-jre-slim
+FROM amazoncorretto:17-alpine-jdk
 
 MAINTAINER Robles_Facundo
 
