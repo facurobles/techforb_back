@@ -21,7 +21,7 @@ public class ConfiguracionSeguridad {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFiltroSolicitudes jwtFiltroSolicitudes) throws Exception {
         http.cors().and().csrf().disable()     //desactivo Cross-site
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/autenticacion/login", "/autenticacion/register").permitAll() //desprotego estas rutas
+                .requestMatchers("/autenticacion/login", "/autenticacion/register", "/autenticacion/validarToken").permitAll() //desprotego estas rutas
                 .anyRequest().authenticated()       //protejo las demas 
             )
             .addFilterBefore(jwtFiltroSolicitudes, UsernamePasswordAuthenticationFilter.class);

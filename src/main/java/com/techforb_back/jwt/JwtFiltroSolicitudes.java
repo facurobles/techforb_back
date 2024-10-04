@@ -31,7 +31,7 @@ public class JwtFiltroSolicitudes extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if (path.equals("/autenticacion/login") || path.equals("/autenticacion/register")) {
+        if (path.equals("/autenticacion/login") || path.equals("/autenticacion/register") || path.equals("/autenticacion/validarToken")) {
             filterChain.doFilter(request, response); 
             return;
         }
